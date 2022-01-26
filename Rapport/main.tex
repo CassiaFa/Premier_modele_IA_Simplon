@@ -5,6 +5,8 @@
 \usepackage{natbib}
 \usepackage[vmargin=3cm,left=4cm,right=4cm]{geometry}
 
+\usepackage{amsmath}
+
 \usepackage{babel}
 
 \usepackage{graphicx}
@@ -53,11 +55,11 @@ Fabio \textsc{Cassiano}
 
 \begin{figure}[!ht]
     %\hspace*{-0.5cm}
-	\includegraphics[height=0.1\columnwidth]{Image/logo/logo_simplon.png}
+	\includegraphics[height=0.1\columnwidth]{images/logo/logo_simplon.png}
 	\hspace*{0.5cm}
-	\includegraphics[height=0.12\columnwidth]{Image/logo/logo_Isen.png}
+	\includegraphics[height=0.12\columnwidth]{images/logo/logo_Isen.png}
 	\hspace*{0.5cm}
-	\includegraphics[height=0.1\columnwidth]{Image/logo/logo_microsoft.jpg}
+	\includegraphics[height=0.1\columnwidth]{images/logo/logo_microsoft.jpg}
 \end{figure}
 
 \vfill
@@ -71,15 +73,70 @@ Fabio \textsc{Cassiano}
 \newpage
 
 \section{Rappel sur la régression linéaire}
+
+La régression linéaire est une méthode statistique qui a pour objectif de trouver une relation entre une variable cible (\textit{target}) à partir d'une variable dite descriptive. La régression linéaire peut-être appliqué sur différents types de modèles qui vont être abordés dans les sous-section ci-dessous. 
+
 \subsection{Modèle simple}
+
+Le modèle linéaire simple, est un modèle basé sur une fonction affine. Cette fonction a pour équation mathématique :
+
+\begin{center}
+    $f(x) = ax + b$
+\end{center}
+
+\noindent Dans cette équation $f(x)$ représente la valeur cible, soit celle qu'il faut prédire. La valeur $x$ correspond à la variable descriptive à partir de laquelle on pourra obtenir $f(x)$. Les valeurs a et b correspondent aux coefficients, qui représentent respectivement la pente et l'ordonnée à l'origine. 
 
 \subsection{Modèle multiple}
 
+Le modèle linéaire multiple est une extension du modèle linéaire simple, qui permet la prédiction du variable cible à partir de plusieurs variables descriptives. Ce modèle a pour équation :
+
+\begin{center}
+    $f(x) = ax_{1} + bx_{2} + c $
+\end{center}
+
+\noindent Tout comme pour l'équation précédente $f(x)$ représente la valeur cible, soit celle qu'il faut prédire. Les valeur $x_{1}$ jusqu'à $x_{n}$ représentent aux différentes variables descriptives de notre jeu de données.
+
 \subsection{Modèle polynomiale}
 
+Concernant le modèle polynomiale, il correspond à une équation à une inconnue, avec un polynôme de degré $n$. Mathématiquement cela se traduit de la manière suivante :
+
+\begin{center}
+    $f(x) = ax^{n} + bx^{n-1} + c $
+\end{center}
+
+\noindent Par exemple pour un polynomial de degré 2 l'équation est :
+
+\begin{center}
+    $f(x) = ax^{2} + bx + c $
+\end{center}
+
+\newpage
+
 \section{Fonction sous python}
+
+Ces différent modèle peuvent être retranscrit sous python. Pour facilité leur modélisation on peut les écrire modèles sous forme matricielle.
+
 \subsection{Modèle simple}
 
+\noindent L'écriture matricielle du modèle linéaire simple est donc la suivante :
+\begin{align*}
+    F = X \cdot \theta
+\end{align*}
+
+\noindent avec, 
+$$X = \begin{bmatrix}
+    x^{(1)} & 1 \\
+    \vdots & \vdots \\
+    x^{n} & 1
+\end{bmatrix}$$
+
+\noindent et, 
+$$\theta = \begin{bmatrix}
+    a \\
+    b
+\end{bmatrix}$$
+
+\noindent où $X$ est la matrice qui contient la variable descriptive $x$, sous forme de colonne. Une colonne composé uniquement de $1$ est également inclut dans $X$, ce qui correspond au multiplicateur du coefficient \textit{b}. Enfin la matrice $\theta$ regroupe les coefficients \textit{a} et \textit{b}.
 \subsection{Modèle multiple}
 
 \subsection{Modèle polynomiale}
