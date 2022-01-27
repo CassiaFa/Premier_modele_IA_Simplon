@@ -16,6 +16,71 @@
 % \usepackage{hyperref}
 \usepackage[hidelinks]{hyperref}
 
+% ################################
+% Package pour incorporer du code
+\usepackage{xcolor,colortbl}
+\usepackage{listings}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstdefinestyle{mystyle}{
+    literate=
+  {²}{{\textsuperscript{2}}}1
+  {⁴}{{\textsuperscript{4}}}1
+  {⁶}{{\textsuperscript{6}}}1
+  {⁸}{{\textsuperscript{8}}}1
+  {€}{{\euro{}}}1
+  {é}{{\'e}}1
+  {è}{{\`{e}}}1
+  {ê}{{\^{e}}}1
+  {ë}{{\¨{e}}}1
+  {É}{{\'{E}}}1
+  {Ê}{{\^{E}}}1
+  {û}{{\^{u}}}1
+  {ù}{{\`{u}}}1
+  {â}{{\^{a}}}1
+  {à}{{\`{a}}}1
+  {á}{{\'{a}}}1
+  {ã}{{\~{a}}}1
+  {Á}{{\'{A}}}1
+  {Â}{{\^{A}}}1
+  {Ã}{{\~{A}}}1
+  {ç}{{\c{c}}}1
+  {Ç}{{\c{C}}}1
+  {õ}{{\~{o}}}1
+  {ó}{{\'{o}}}1
+  {ô}{{\^{o}}}1
+  {Õ}{{\~{O}}}1
+  {Ó}{{\'{O}}}1
+  {Ô}{{\^{O}}}1
+  {î}{{\^{i}}}1
+  {Î}{{\^{I}}}1
+  {í}{{\'{i}}}1
+  {Í}{{\~{Í}}}1,
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\color{codegray},
+    stringstyle=\color{orange},
+    basicstyle=\ttfamily\small, % \footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=10pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+}
+
+\lstset{style=mystyle}
+
+%##################################
+
+
 \begin{document}
 
 %###############################################
@@ -114,9 +179,11 @@ Concernant le modèle polynomiale, il correspond à une équation à une inconnu
 
 \section{Fonction sous python}
 
-Ces différent modèle peuvent être retranscrit sous python. Pour facilité leur modélisation on peut les écrire modèles sous forme matricielle.
+\subsection{Définition de la fonction \textit{model()}}
 
-\subsection{Modèle simple}
+Les différents modèles présenté précedement peuvent être retranscrit sous python. Pour facilité leur modélisation on peut les écrire modèles sous forme matricielle.
+
+\subsubsection{Modèle simple}
 
 \noindent L'écriture matricielle du modèle linéaire simple est donc la suivante :
 \begin{align*}
@@ -127,7 +194,7 @@ Ces différent modèle peuvent être retranscrit sous python. Pour facilité leu
 $$X = \begin{bmatrix}
     x^{(1)} & 1 \\
     \vdots & \vdots \\
-    x^{n} & 1
+    x^{(n)} & 1
 \end{bmatrix}$$
 
 \noindent et, 
@@ -137,9 +204,82 @@ $$\theta = \begin{bmatrix}
 \end{bmatrix}$$
 
 \noindent où $X$ est la matrice qui contient la variable descriptive $x$, sous forme de colonne. Une colonne composé uniquement de $1$ est également inclut dans $X$, ce qui correspond au multiplicateur du coefficient \textit{b}. Enfin la matrice $\theta$ regroupe les coefficients \textit{a} et \textit{b}.
-\subsection{Modèle multiple}
 
-\subsection{Modèle polynomiale}
+\subsubsection{Modèle multiple}
+
+Pour le modèle multiple, la forme matricielle est la même que pour le modèle simple. Il suffit d'adapter la matrice $X$ en ajoutant les différentes features que l'on souhaite étudié, et ajouter à la matrice $\theta$ le nombre de coefficient correspondant. Ce qui nous donne :
+
+$$X = \begin{bmatrix}
+    x_{1}^{(1)} & x_{2}^{(1)} & 1 \\
+    \vdots & \vdots & \vdots\\
+    x_{1}^{(n)} & x_{2}^{(n)} & 1
+\end{bmatrix}$$
+
+\subsubsection{Modèle polynomiale}
+
+De même pour le modèle polynomiale, il suffit d'adapter la matrice $X$ et $\theta$. Ce qui nous donne :
+
+$$X = \begin{bmatrix}
+    x^{2 (1)} & x^{(1)} & 1 \\
+    \vdots & \vdots & \vdots \\
+    x^{2 (n)} & x^{(n)} & 1
+\end{bmatrix}$$
+
+\subsubsection{Code python}
+
+\begin{lstlisting}[language=Python]
+# Création de la fonction modélisant le modèle linéaire F
+def model(X, theta):
+    return X.dot(theta)
+\end{lstlisting}
+
+\subsection{Définition de la fonction \textit{fonction\_cout()}}
+La fonction de coût permet de mesurer les erreurs entre le modèle calculé et le jeu de données. La formule mathématiquement de cette fonction, pour le linéaire simple, s'écrit de la manière suivante : 
+
+\begin{align*}
+    J(a,b) = \dfrac{1}{2m}\sum_{i=1}^{m}(ax + b - y)^2
+\end{align*}
+
+\noindent On peut également l'écrire sous forme matricielle, ce qui la généralise pour les autres modèles présenté précédemment. Ce qui donne :
+
+\begin{align*}
+    J(\theta) = \dfrac{1}{2m}\sum(X.\theta - y)^2
+\end{align*}
+
+\subsubsection{Code python}
+
+\begin{lstlisting}[language=Python]
+# Création de la fonction permettant l'estimation de la fonction de coût
+def fonction_cout(X, Y, theta):
+    m = len(X) # taille de la matrice X
+    return (1/(2*m))* np.sum(np.power((model(X, theta) - Y), 2))
+\end{lstlisting}
+
+\subsection{Définition de la fonction \textit{gradient()}}
+Le gradient permet de caractérisé la variabilité d'une fonction en un point donné. Pour ce faire on calcule les dérivées partielles. Le gradient de notre fonction coût correspond donc aux dérivées partielle selon \textit{a} et selon \textit{b}. Ce qui se traduit par :
+\begin{align*}
+    \dfrac{\delta J(a,b)}{\delta a} = \dfrac{1}{m}\sum(ax + b - y) \\
+    \dfrac{\delta J(a,b)}{\delta b} = \dfrac{1}{m}\sum(ax + b - y)
+\end{align*}
+
+\noindent De même ces équations peuvent s'écrire sous forme matricielle :
+
+\begin{align*}
+    \dfrac{\delta J(\theta)}{\delta \theta} = \dfrac{1}{m}X^{T}(X.\theta - y)
+\end{align*}
+
+\noindent Où $X^{T}$ correspond à la transposé de $X$.
+
+\subsubsection{Code python}
+
+\begin{lstlisting}[language=Python]
+# Création de la fonction permettant l'estimation des gradient
+def gradient(X, Y, theta):
+    m = len(X)
+    return (1/m) * X.T.dot((model(X, theta) - Y))
+\end{lstlisting}
+
+\newpage
 
 \section{Résultats}
 \subsection{Modèle simple}
