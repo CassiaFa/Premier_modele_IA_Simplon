@@ -181,7 +181,7 @@ Concernant le modèle polynomiale, il correspond à une équation à une inconnu
 
 \subsection{Définition de la fonction \textit{model()}}
 
-Les différents modèles présenté précedement peuvent être retranscrit sous python. Pour facilité leur modélisation on peut les écrire modèles sous forme matricielle.
+Les différents modèles présentés précédemment peuvent être retranscrit sous python. Pour facilité leur modélisation on peut les écrire modèles sous forme matricielle, ce qui ce résumera entre un produit matricielle entre deux matrices.
 
 \subsubsection{Modèle simple}
 
@@ -226,6 +226,7 @@ $$X = \begin{bmatrix}
 \end{bmatrix}$$
 
 \subsubsection{Code python}
+\noindent Au niveau code cela se traduit facilement, il suffit de mettre en place une fonction \textit{model()}, avec deux paramètres d'entrées, nos matrices $X$ et $\theta$.
 
 \begin{lstlisting}[language=Python]
 # Création de la fonction modélisant le modèle linéaire F
@@ -247,6 +248,8 @@ La fonction de coût permet de mesurer les erreurs entre le modèle calculé et 
 \end{align*}
 
 \subsubsection{Code python}
+
+\noindent Pour implémenter cette fonction on définit une fonction \textit{fonction\_cout()}, qui prend comme paramètres les matrices $X$, $Y$ (la \textit{"target"}), et $\theta$. La fonction fera directement appel à la fonction précédente \textit{model()}.
 
 \begin{lstlisting}[language=Python]
 # Création de la fonction permettant l'estimation de la fonction de coût
@@ -281,7 +284,95 @@ def gradient(X, Y, theta):
 
 \newpage
 
-\section{Résultats}
+\section{Résultats des fonctions implémentés manuellement}
+\subsection{Modèle simple}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/cout_MLS.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/evo_MLS.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection{Modèle multiple}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/data_MLM.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/cout_MLM.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection{Modèle polynomiale}
+
+\subsection{Jeu de données salaire}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/cout_MLP.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/evo_MLP.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/modele_MLP.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection{Jeu de données vin}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/modele_MLP2.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection{Évaluation des modèles}
+
+\newpage
+
+\section{Résultats des fonctions Scikit-Learn}
+\subsection{Modèle simple}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/modele_SLLS.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection{Modèle multiple}
+
+
+\subsection{Modèle polynomiale}
+
+\newpage
+
+\section{Comparaison des résultats}
 \subsection{Modèle simple}
 
 \subsection{Modèle multiple}
@@ -290,5 +381,6 @@ def gradient(X, Y, theta):
 
 \newpage
 
+\section{Conclusion}
 
 \end{document}
