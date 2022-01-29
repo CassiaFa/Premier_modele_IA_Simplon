@@ -337,7 +337,7 @@ Le premier jeu de données (ou \textit{DataSet}) sur lequel nous allons tester n
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{Rapport/images/cout_MLS.png}
-    \caption{Evolution des résultats de la fonctions de coût au fur et à mesure des itérations.}
+    \caption{Évolution des résultats de la fonctions de coût au fur et à mesure des itérations.}
     \label{fig:JMLS}
 \end{figure}
 
@@ -394,7 +394,7 @@ Pour ce DataSet on constate que l'on commence à atteindre un plateau autour de 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{Rapport/images/evo_MLP.png}
-    \caption{Réprésentation de l'évolution du modèle toutes les 500 itérations.}
+    \caption{Représentation de l'évolution du modèle toutes les 500 itérations.}
     \label{fig:evo_MLP}
 \end{figure}
 
@@ -409,41 +409,74 @@ Pour ce DataSet on constate que l'on commence à atteindre un plateau autour de 
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\textwidth]{Rapport/images/modele_MLP2.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \includegraphics[width=\textwidth]{Rapport/images/cout_MLP2.png}
+    \caption{Représentation de l'évolution des résultats de la fonctions de coût au fur et à mesure des itérations.}
+    \label{fig:cout_MLP2}
 \end{figure}
-
-\subsection{Évaluation des modèles}
-
-\newpage
-
-\section{Résultats des fonctions Scikit-Learn}
-\subsection{Modèle simple}
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\textwidth]{Rapport/images/modele_SLLS.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \includegraphics[width=\textwidth]{Rapport/images/modele_MLP2.png}
+    \caption{Représentation du modèle estimé.}
+    \label{fig:modele_mlp2}
 \end{figure}
-
-\subsection{Modèle multiple}
-
-
-\subsection{Modèle polynomiale}
 
 \newpage
 
 \section{Comparaison des résultats}
+
 \subsection{Modèle simple}
 
-\subsection{Modèle multiple}
+\begin{figure}[!htbp]
+    \centering
+    \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Rapport/images/modele_MLS.png}
+         \caption{Fonction implémentée}
+        \label{fig:modele_SLLS}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Rapport/images/modele_SLLS.png}
+         \caption{ScikitLearn}
+        \label{fig:modele_SLLS}
+    \end{subfigure}
+\end{figure}
+
 
 \subsection{Modèle polynomiale}
 
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Rapport/images/modele_SLLP1.png}
+    \caption{Représentation du modèle obtenu par la fonction de régression Linéaire de ScikitLearn, sur un modèle polynomiale.}
+    \label{fig:modele_SLLP}
+\end{figure}
+
 \newpage
 
+\subsection{Récapitulatif des évaluations des modèles}
+
+Le tableau ci-dessous regroupe les résultats obtenus lors des évaluations des différents modèles avec le coefficient de détermination et l'erreur quadratique moyenne. Les valeurs obtenus nous montre qu'il n'y a que très peu de différence entre l'utilisation des fonctions de Scikit Learn et celles que nous avons implémenté manuellement. Sauf pour le modèle polynomiale basé sur le DataSet \textit{Position\_Salaries.csv}, où l'on observe un meilleur $R^{2}$ pour la fonction de Scikit Learn. Cela pourrait peut-être s'expliquer par le fait que les paramètres utilisé dans notre fonction ne correspondait pas à ceux utilisé par défaut dans Scikit Learn.\\
+
+\begin{table}[!htbp]
+\begin{tabular}{l|cc|cc|}
+\cline{2-5}
+                                                        & \multicolumn{2}{l|}{\textbf{Fonction manuelles}}     & \multicolumn{2}{l|}{\textbf{Fonction Scikit Learn}}  \\ \cline{2-5} 
+                                                        & \multicolumn{1}{c|}{\textbf{$R^{2}$}} & \textbf{MSE} & \multicolumn{1}{c|}{\textbf{$R^{2}$}} & \textbf{MSE} \\ \hline
+\multicolumn{1}{|l|}{\textbf{Modèle linéaire simple}}   & \multicolumn{1}{c|}{0.97}             & -            & \multicolumn{1}{c|}{0.97}             & -            \\ \hline
+\multicolumn{1}{|l|}{\textbf{Modèle linéaire multiple}} & \multicolumn{1}{c|}{0.64}             & 0.36         & \multicolumn{1}{c|}{0.64}             & 0.36         \\ \hline
+\multicolumn{1}{|l|}{\textbf{Modèle polynomiale 1}}     & \multicolumn{1}{c|}{0.81}             & $1.6e^{10}$  & \multicolumn{1}{c|}{0.92}             & $6.8e^{9}$   \\ \hline
+\multicolumn{1}{|l|}{\textbf{Modèle polynomiale 2}}     & \multicolumn{1}{c|}{0.23}             & 0.50         & \multicolumn{1}{c|}{0.23}             & 0.50         \\ \hline
+\end{tabular}
+\caption{Tableau de comparaison des valeurs de $R^{2}$ et de MSE obtenue par les modèles estimés par les fonctions implémenter manuellement, et les modèles obtenus par l'utilisation de Scikit Learn}
+\label{tab:comparatif}
+\end{table}
+
+Pour conclure cette comparaison, on pourrait dire que le fait d'implémenter une fonction soit même nous offre une meilleur maîtrise de son utilisation. Cependant, on peut considérer que les fonctions Scikit Learn ont sûrement était plus optimisé que les nôtres. Avec des résultats aussi similaire autant utiliser les fonctions déjà existantes qui nous permettant même dans certain cas d'obtenir de meilleurs résultats.
+
 \section{Conclusion}
+
+En conclusion ce projet m'as permis de revoir des notions que je connaissais déjà, je n'ai donc rien appris de nouveaux, cependant cela m'a permit de consolider mes connaissances. Aucunes difficultés à signaler.
 
 \end{document}
