@@ -380,26 +380,30 @@ Nous pouvons également utilisé nos fonctions dans le but d'estimer un modèle 
 
 \subsection{Jeu de données salaire}
 
+Pour un modèle polynomiale nous pouvons également utilisé nos fonctions. Ici le DataSet utilisé est \textit{Position\_Salaries.csv}. Comme pour les utilisations précédentes on prépare nos matrices, et l'on adapte nos paramètres \textit{alpha} et \textit{n\_iteration}. On représente ensuite la fonction de coût (voir Fig. \ref{fig:cout_MLP}).\\
+
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{Rapport/images/cout_MLP.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \caption{Représentation de l'évolution des résultats de la fonctions de coût au fur et à mesure des itérations.}
+    \label{fig:cout_MLP}
 \end{figure}
+
+Pour ce DataSet on constate que l'on commence à atteindre un plateau autour de la 1500ème itération. Nous avons également tracer l'évolution du modèle en représentant les modèles obtenues toutes les 500 itérations (voir Fig. \ref{fig:evo_MLP}). L'évaluation du modèle avec le coefficient de détermination nous a donné un $R^{2}$ est de \textbf{0.81}. On peut considérer que notre modèle n'est pas le plus optimal, mais son résultat n'est pas non plus mauvais.
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{Rapport/images/evo_MLP.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \caption{Réprésentation de l'évolution du modèle toutes les 500 itérations.}
+    \label{fig:evo_MLP}
 \end{figure}
 
-\begin{figure}[!htbp]
-    \centering
-    \includegraphics[width=\textwidth]{Rapport/images/modele_MLP.png}
-    \caption{Caption}
-    \label{fig:my_label}
-\end{figure}
+%\begin{figure}[!htbp]
+%    \centering
+%    \includegraphics[width=\textwidth]{Rapport/images/modele_MLP.png}
+%    \caption{Caption}
+%    \label{fig:my_label}
+%\end{figure}
 
 \subsection{Jeu de données vin}
 
