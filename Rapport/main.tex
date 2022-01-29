@@ -226,7 +226,7 @@ $$X = \begin{bmatrix}
 \end{bmatrix}$$
 
 \subsubsection{Code python}
-\noindent Au niveau code cela se traduit facilement, il suffit de mettre en place une fonction \textit{model()}, avec deux paramètres d'entrées, nos matrices $X$ et $\theta$.
+\noindent Au niveau code cela se traduit facilement, il suffit de mettre en place une fonction \textit{model()}, avec deux paramètres d'entrées, nos matrices $X$ et $\theta$.\\
 
 \begin{lstlisting}[language=Python]
 # Création de la fonction modélisant le modèle linéaire F
@@ -275,6 +275,8 @@ Le gradient permet de caractérisé la variabilité d'une fonction en un point d
 
 \subsubsection{Code python}
 
+Le calcul de gradient est implémenté sous une fonction \textit{gradient()}, prenant en paramètres d'entrées  $X$, $Y$, et $\theta$. La fonction fera directement appel à la fonction précédente \textit{model()}.\\
+
 \begin{lstlisting}[language=Python]
 # Création de la fonction permettant l'estimation des gradient
 def gradient(X, Y, theta):
@@ -282,40 +284,97 @@ def gradient(X, Y, theta):
     return (1/m) * X.T.dot((model(X, theta) - Y))
 \end{lstlisting}
 
+\subsection{Définition de la fonction de descente de }
+
+Maintenant que les principales fonctions principal ont été définit on peut les regrouper dans une fonction \textit{descente\_gradient()}. Cette fonction a pour objectif de faire évoluer notre modèle afin de minimiser son erreur. Cette fonction prend donc en paramètres nos matrices $X$, $Y$ et $\theta$, ainsi qu'un paramètre $alpha$ et un paramètre $n\_iteration$. Le paramètre $alapha$ correspond au pas d'apprentissage (\textit{learning rate}) de notre modèle, c'est le facteur qui joue un rôle dans la ré-estimation du gradient. Le dernier paramètre correspond au nombre d'itération, c'est à dire le nombre de fois que nous souhaitons ré-estimer notre modèle. Dans la définition de notre fonction nous avons établis des valeurs par défaut pour ces deux paramètres, qui sont respectivement de $1e^{-3}$ et $30$.\\
+
+
+\noindent Dans cette fonction il a été décidé de commencer par initialiser deux listes \textit{F\_plot} et \textit{J} qui stockeront respectivement tous les modèles calculés par la suite et leurs valeurs de coût. \\
+
+\noindent A l'étape suivante on ré-estime un nouveau $\theta$, que l'on utilise pour calculer le nouveau modèle que l'on stocke dans \textit{F\_plot}. On calcul enfin l'erreur du modèle grâce à \textit{fonction\_cout()}, que l'on stocke dans \textit{J}. On ré-itère ensuite ces calculs autant de fois que le nombre d'itération définit. Et pour finir on renvoi les variables \textit{J}, \textit{F\_plot}, ainsi que les derniers coefficient estimé (la matrice $\theta$).\\
+
+\begin{lstlisting}[language=Python]
+def descente_gradient(X, Y, theta, alpha=1e-3, n_iterations=30):
+    # Variable permetant de stocker tout les modèles pour les représenter facilement
+    F_plot = [] 
+    J = [] # Variable pour stocker le coût
+    
+    for i in range(n_iterations):
+        # Re-estimation de thêta
+        theta = theta - alpha*gradient(X, Y, theta)
+        # Calcul du model avec le nouveau thêta
+        F_plot.append(model(X, theta)) 
+        # Calcul du coût du modèle
+        J.append(fonction_cout(X, Y, theta)) 
+    
+    return J, theta, F_plot
+\end{lstlisting}
+
+\subsection{Définition de la fonction \textit{coeff\_determination()}}
+
+\noindent Le coefficient de détermination ($R^{2}$) permet d'évaluer le modèle estimé. Sa formule mathématique est la suivante :
+
+\begin{align*}
+    R^{2} = 1 - \dfrac{\sum(y - F)^{2}}{\sum(y - \bar{y})^{2}}
+\end{align*}
+
+\noindent Pour notre implémentassion en python la fonction prendra en paramètre notre matrice $Y$, ainsi que la prédiction de notre modèle. 
+
+\begin{lstlisting}[language=Python]
+def coeff_determination(y, F):
+    return 1 - np.sum((y - F)**2) / np.sum((y - y.mean())**2) 
+\end{lstlisting}
+
 \newpage
 
 \section{Résultats des fonctions implémentés manuellement}
 \subsection{Modèle simple}
 
+Le premier jeu de données (ou \textit{DataSet}) sur lequel nous allons tester nos fonctions, est le DataSet "\textit{reg\_simple.csv}" qui regroupe les notes obtenus par des étudiants selon le nombres d'heure de révision effectué. Visuellement il est possible de constater que le DataSet a une tendance linéaire.\\
+
+\noindent Après avoir préparer nos matrices $X$, $Y$ et $\theta$, on appelle notre fonction \textit{descente\_gradient()}, en gardant l'\textit{alpha} et le \textit{n\_iteration} par défaut. Il est maintenant possible de tracer l'évolution de notre fonction (voir Fig. \ref{fig:JMLS}). 
+
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{Rapport/images/cout_MLS.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \caption{Evolution des résultats de la fonctions de coût au fur et à mesure des itérations.}
+    \label{fig:JMLS}
 \end{figure}
+
+Comme on peut le voir sur ce graphique, notre coût atteint un plateau autour de la 10ème itération, ce qui signifie que notre modèle n'est plus optimisé au-delà. Il aurait donc été possible de ne réaliser que 10 itérations.\\
+
+Il est également possible de représenter l'évolution de notre modèle (voir Fig. \ref{fig:evo_MLS}), grâce à notre varible \textit{F\_plot}. Ce qui nous permet de voir l'amélioration de notre modèle au fur et à mesure des itérations.\\
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{Rapport/images/evo_MLS.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \caption{Représentation de l'évolution du modèle au fur et à mesure des itérations.}
+    \label{fig:evo_MLS}
 \end{figure}
 
+Notre modèle peut être évalué par le coefficient de détermination, pour ce faire on utilise la fonction \textit{coeff\_determination}. Pour ce premier modèle notre résultat $R^{2}$ est de \textbf{0.97}, ce qui est un très bon score car on se rapproche de 1.
+
 \subsection{Modèle multiple}
+
+Nous pouvons également utilisé nos fonctions dans le but d'estimer un modèle multiple. Pour ce faire le DataSet \textit{boston\_house\_price.csv} est utilisé. Dans un premier temps on sélectionne les deux variables descriptive les plus corrélées avec notre target. les deux variables sélectionnées sont \textit{LSTAT} et \textit{RM} (voir Fig. \ref{fig:boston_data}).\\
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{Rapport/images/data_MLM.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \caption{Représentation de notre target en fonction des deux variables sélectionnés \textit{LSTAT} et \textit{RM}}
+    \label{fig:boston_data}
 \end{figure}
+
+\noindent Tout comme précédemment on prépare nos matrices et on utilise les fonctions implémentés, on trace ensuite notre graphique de fonction de coût (voir Fig. \ref{fig:cout_MLM}), en adaptant cette fois-ci nos paramètres \textit{alpha} et \textit{n\_iteration}.\\
 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{Rapport/images/cout_MLM.png}
-    \caption{Caption}
-    \label{fig:my_label}
+    \caption{Représentation de l'évolution des résultats de la fonctions de coût au fur et à mesure des itérations}
+    \label{fig:cout_MLM}
 \end{figure}
+
+\noindent Il est possible de constater par cette représentation que nous avons commencer à atteindre un plateau autour de la 1000ème itération. Après évaluation de notre modèle avec le coefficient de détermination on obtient un $R^{2}$ est de \textbf{0.64}. Au vu de ce résultat, on peut envisager que notre modèle n'est pas très bien adapter à ce jeu de données.
 
 \subsection{Modèle polynomiale}
 
