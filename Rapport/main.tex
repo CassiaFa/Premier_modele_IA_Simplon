@@ -378,7 +378,7 @@ Nous pouvons également utilisé nos fonctions dans le but d'estimer un modèle 
 
 \subsection{Modèle polynomiale}
 
-\subsection{Jeu de données salaire}
+\subsubsection{Jeu de données salaire}
 
 Pour un modèle polynomiale nous pouvons également utilisé nos fonctions. Ici le DataSet utilisé est \textit{Position\_Salaries.csv}. Comme pour les utilisations précédentes on prépare nos matrices, et l'on adapte nos paramètres \textit{alpha} et \textit{n\_iteration}. On représente ensuite la fonction de coût (voir Fig. \ref{fig:cout_MLP}).\\
 
@@ -398,14 +398,9 @@ Pour ce DataSet on constate que l'on commence à atteindre un plateau autour de 
     \label{fig:evo_MLP}
 \end{figure}
 
-%\begin{figure}[!htbp]
-%    \centering
-%    \includegraphics[width=\textwidth]{Rapport/images/modele_MLP.png}
-%    \caption{Caption}
-%    \label{fig:my_label}
-%\end{figure}
+\subsubsection{Jeu de données vin}
 
-\subsection{Jeu de données vin}
+On réalise les mêmes étapes que les précédentes sur le jeu de données \textit{qualite-vin-rouge.csv}. On réalise une corrélation pour identifier la variable déscriptive la plus corrélé avec notre target (\textit{"qualité"}). On établis nos différentes matrices, et on lance l'estimation de notre modèle. Il est possible de constater sur la courbe de fonction coût (voir Fig. \ref{fig:cout_MLP2}), qu'un plateau est atteint autour de la 500ème itération.\\
 
 \begin{figure}[!htbp]
     \centering
@@ -413,6 +408,10 @@ Pour ce DataSet on constate que l'on commence à atteindre un plateau autour de 
     \caption{Représentation de l'évolution des résultats de la fonctions de coût au fur et à mesure des itérations.}
     \label{fig:cout_MLP2}
 \end{figure}
+
+\noindent Pour l'évaluation de modèle on a eu pour le coefficient de détermination \textbf{0.23}, et pour l'erreur quadratique moyenne \textbf{0.5}. Au vu de ces valeurs notre modèle n'est pas fiable.\\
+
+\noindent En représentant notre modèle sur les données (voir Fig. \ref{fig:modele_mlp2}),on constate que notre jeu de données correspond à de la catégorisation. Notre approche n'est donc pas approprié à ce type de données, il faudrait peut-être réfléchir à une autre méthode.
 
 \begin{figure}[!htbp]
     \centering
@@ -429,11 +428,11 @@ Pour ce DataSet on constate que l'on commence à atteindre un plateau autour de 
 
 \begin{figure}[!htbp]
     \centering
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{Rapport/images/modele_MLS.png}
+         \includegraphics[width=\textwidth]{Rapport/images/modele_LS.png}
          \caption{Fonction implémentée}
-        \label{fig:modele_SLLS}
+        \label{fig:modele_LS}
     \end{subfigure}
     \begin{subfigure}[b]{0.5\textwidth}
          \centering
@@ -441,16 +440,46 @@ Pour ce DataSet on constate que l'on commence à atteindre un plateau autour de 
          \caption{ScikitLearn}
         \label{fig:modele_SLLS}
     \end{subfigure}
+    \caption{Comparaison des modèles obtenu par la fonction de régression Linéaire implémenter manuellement (a) et celle de de ScikitLearn (b)}
 \end{figure}
 
 
-\subsection{Modèle polynomiale}
+\subsection{Modèle polynomiale - \textit{Position\_Salaries.csv}}
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\textwidth]{Rapport/images/modele_SLLP1.png}
-    \caption{Représentation du modèle obtenu par la fonction de régression Linéaire de ScikitLearn, sur un modèle polynomiale.}
-    \label{fig:modele_SLLP}
+    \begin{subfigure}[b]{0.49\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Rapport/images/modele_MLP.png}
+         \caption{Fonction implémentée}
+        \label{fig:modele_LP1}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Rapport/images/modele_SLLP1.png}
+         \caption{ScikitLearn}
+        \label{fig:modele_SLLP1}
+    \end{subfigure}
+    \caption{Comparaison des modèles obtenu par la fonction de régression Linéaire implémenter manuellement (a) et celle de de ScikitLearn (b)}
+\end{figure}
+
+\subsection{Modèle polynomiale - \textit{qualite-vin-rouge.csv}}
+
+\begin{figure}[!htbp]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Rapport/images/modele_MLP2.png}
+         \caption{Fonction implémentée}
+        \label{fig:modele_LP1}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.5\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{Rapport/images/modele_SLP2.png}
+         \caption{ScikitLearn}
+        \label{fig:modele_SLLP1}
+    \end{subfigure}
+    \caption{Comparaison des modèles obtenu par la fonction de régression Linéaire implémenter manuellement (a) et celle de de ScikitLearn (b)}
 \end{figure}
 
 \newpage
@@ -477,6 +506,6 @@ Pour conclure cette comparaison, on pourrait dire que le fait d'implémenter une
 
 \section{Conclusion}
 
-En conclusion ce projet m'as permis de revoir des notions que je connaissais déjà, je n'ai donc rien appris de nouveaux, cependant cela m'a permit de consolider mes connaissances. Aucunes difficultés à signaler.
+En conclusion ce projet m'a permis de revoir des notions que je connaissais déjà, je n'ai donc rien appris de nouveaux, cependant cela m'a permit de consolider mes connaissances. Aucunes difficultés à signaler.
 
 \end{document}
